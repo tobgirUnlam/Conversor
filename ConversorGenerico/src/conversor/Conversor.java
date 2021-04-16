@@ -15,13 +15,12 @@ public abstract class Conversor {
 
     public abstract String getLabelValor2();
 
-    public abstract String ConvertirSegunValor1(double valor1);
+    public abstract double ConvertirSegunValor1(double valor1);
     
-    public abstract String ConvertirSegunValor2(double valor1);
+    public abstract double ConvertirSegunValor2(double valor1);
     
     @Override
     public String toString() {
         return getLabelValor1() + " a " + getLabelValor2();
     }
-
 }

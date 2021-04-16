@@ -9,29 +9,29 @@ package conversor;
  *
  * @author Tobias
  */
-public class CentimetrosAPulgadasConversor extends Conversor {
+public class LitrosAGalonConversor extends Conversor {
 
-    private final double UNA_PULGADA = 2.54;
+    private final double UN_GALON = 3.785;
 
     @Override
     public String getLabelValor1() {
-        return "Centimetros";
+        return "Litros";
     }
 
     @Override
     public String getLabelValor2() {
-        return "Pulgadas";
+        return "Galones";
     }
 
     @Override
     public double ConvertirSegunValor1(double valor1) {
-            double resultado = valor1 * UNA_PULGADA;
+            double resultado = valor1 / UN_GALON;
             return resultado;
     }
 
     @Override
     public double ConvertirSegunValor2(double valor2) {
-            double resultado = valor2 / UNA_PULGADA;
+            double resultado = valor2 * UN_GALON;
             return resultado;        
     }
 

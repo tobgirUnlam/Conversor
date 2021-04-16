@@ -5,8 +5,10 @@
  */
 package conversor;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,10 +28,27 @@ public class ConversorGenerico extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         conversores.add(new CentimetrosAPulgadasConversor());
         conversores.add(new MetrosAKilometrosConversor());
-        
+        conversores.add(new CentigradosAFahrenheitConversor());
+        conversores.add(new KilometrosPorHoraAMillasPorHoraConversor());
+        conversores.add(new LitrosAGalonConversor());
         btnConvertir.setText("Convertir");
+
         for (Conversor conversor : conversores) {
             cmbSeleccionarUnidades.addItem(conversor.toString());
+        }
+    }
+
+    private void convertir() {
+        try {
+            if (txtValor1Modificado) {
+                double valor1 = Double.parseDouble(txtValor1.getText().replace(",", "."));
+                txtValor2.setText(String.format("%.2f", this.conversorSeleccionado.ConvertirSegunValor1(valor1)));
+            } else {
+                double valor2 = Double.parseDouble(txtValor2.getText().replace(",", "."));
+                txtValor1.setText(String.format("%.2f", this.conversorSeleccionado.ConvertirSegunValor2(valor2)));
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error al convertir", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -84,10 +103,20 @@ public class ConversorGenerico extends javax.swing.JFrame {
                 txtValor1ActionPerformed(evt);
             }
         });
+        txtValor1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValor1KeyPressed(evt);
+            }
+        });
 
         txtValor2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtValor2FocusLost(evt);
+            }
+        });
+        txtValor2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValor2KeyPressed(evt);
             }
         });
 
@@ -137,13 +166,7 @@ public class ConversorGenerico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertirActionPerformed
-        if(txtValor1Modificado){
-            double valor1 = Double.parseDouble(txtValor1.getText());
-            txtValor2.setText(this.conversorSeleccionado.ConvertirSegunValor1(valor1));
-        }else{
-            double valor2 = Double.parseDouble(txtValor2.getText());
-            txtValor1.setText(this.conversorSeleccionado.ConvertirSegunValor1(valor2));            
-        }
+        this.convertir();
     }//GEN-LAST:event_btnConvertirActionPerformed
 
     private void cmbSeleccionarUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSeleccionarUnidadesActionPerformed
@@ -151,9 +174,9 @@ public class ConversorGenerico extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbSeleccionarUnidadesActionPerformed
 
     private void cmbSeleccionarUnidadesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSeleccionarUnidadesItemStateChanged
-        
+
         this.conversorSeleccionado = conversores.get(cmbSeleccionarUnidades.getSelectedIndex());
-        
+
         lblNombreValor1.setText(conversorSeleccionado.getLabelValor1());
         lblNombreValor2.setText(conversorSeleccionado.getLabelValor2());
     }//GEN-LAST:event_cmbSeleccionarUnidadesItemStateChanged
@@ -169,6 +192,22 @@ public class ConversorGenerico extends javax.swing.JFrame {
     private void txtValor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValor1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtValor1ActionPerformed
+
+    private void txtValor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor1KeyPressed
+        // TODO add your handling code here:        
+        this.txtValor1Modificado = true;
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.convertir();
+        }
+    }//GEN-LAST:event_txtValor1KeyPressed
+
+    private void txtValor2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor2KeyPressed
+        // TODO add your handling code here:
+        this.txtValor1Modificado = false;
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.convertir();
+        }
+    }//GEN-LAST:event_txtValor2KeyPressed
 
     /**
      * @param args the command line arguments

@@ -24,15 +24,15 @@ public class MetrosAKilometrosConversor extends Conversor {
     }
 
     @Override
-    public String ConvertirSegunValor1(double valor1) {
+    public double ConvertirSegunValor1(double valor1) {
             double resultado = valor1 / UN_KILOMETRO;
-            return Double.toString(resultado);
+            return resultado;
     }
 
     @Override
-    public String ConvertirSegunValor2(double valor2) {
+    public double ConvertirSegunValor2(double valor2) {
             double resultado = valor2 * UN_KILOMETRO;
-            return Double.toString(resultado);        
+            return resultado;        
     }
 
 }
