@@ -98,11 +98,6 @@ public class ConversorGenerico extends javax.swing.JFrame {
                 txtValor1FocusLost(evt);
             }
         });
-        txtValor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtValor1ActionPerformed(evt);
-            }
-        });
         txtValor1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtValor1KeyPressed(evt);
@@ -188,10 +183,6 @@ public class ConversorGenerico extends javax.swing.JFrame {
     private void txtValor2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValor2FocusLost
         this.txtValor1Modificado = false;
     }//GEN-LAST:event_txtValor2FocusLost
-
-    private void txtValor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtValor1ActionPerformed
 
     private void txtValor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor1KeyPressed
         // TODO add your handling code here:        

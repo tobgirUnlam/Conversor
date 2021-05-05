@@ -14,8 +14,8 @@ public class CentimetrosAPulgadasConversor extends Conversor {
     private final double UNA_PULGADA = 2.54;
 
     @Override
-    public String getLabelValor1() {
-        return "Centimetros";
+    public String getLabelValor1() {       
+        return "Centimetros";                       
     }
 
     @Override
@@ -25,14 +25,14 @@ public class CentimetrosAPulgadasConversor extends Conversor {
 
     @Override
     public double ConvertirSegunValor1(double valor1) {
-            double resultado = valor1 * UNA_PULGADA;
-            return resultado;
+        double resultado = valor1 * UNA_PULGADA;
+        return resultado;
     }
 
     @Override
     public double ConvertirSegunValor2(double valor2) {
-            double resultado = valor2 / UNA_PULGADA;
-            return resultado;        
+        double resultado = valor2 / UNA_PULGADA;
+        return resultado;
     }
 
 }
