@@ -12,20 +12,44 @@ import java.util.Date;
  * @author Tobias
  */
 public class Persona {
-    
+
     private long dni;
-    
+
     private String nombre;
-    
+
     private String apellido;
-    
-    private Date fechaNac;
+
+    private MiCalendario fechaNacimiento;
+
+    public Persona() {
+
+    }
+
+    public Persona(long dni) throws PersonaException {
+        setDni(dni);
+    }
+
+    public Persona(long dni, String nombre, String apellido, MiCalendario fechaNacimiento) throws PersonaException {
+        setDni(dni);
+        setNombre(nombre);
+        setApellido(apellido);
+        setFechaNac(fechaNacimiento);
+    }
+
+    public Persona(long dni, String nombre, String apellido) throws PersonaException {
+        setDni(dni);
+        setNombre(nombre);
+        setApellido(apellido);
+    }
 
     public long getDni() {
         return dni;
     }
 
-    public void setDni(long dni) {
+    public void setDni(long dni) throws PersonaException {
+        if (dni <= 0) {
+            throw new PersonaException("El DNI debe ser positivo (" + dni + ")");
+        }
         this.dni = dni;
     }
 
@@ -33,7 +57,10 @@ public class Persona {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre) throws PersonaException {
+        if (nombre == null || nombre.trim().equals("")) {
+            throw new PersonaException("Debe indicar el nombre de la persona");
+        }
         this.nombre = nombre;
     }
 
@@ -41,16 +68,19 @@ public class Persona {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellido(String apellido) throws PersonaException {
+        if (apellido == null || apellido.trim().equals("")) {
+            throw new PersonaException("Debe indicar el apellido de la persona");
+        }
+        setApellido(apellido);
     }
 
-    public Date getFechaNac() {
-        return fechaNac;
+    public MiCalendario getFechaNac() {
+        return fechaNacimiento;
     }
 
-    public void setFechaNac(Date fechaNac) {
-        this.fechaNac = fechaNac;
+    public void setFechaNac(MiCalendario fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
-    
+
 }
