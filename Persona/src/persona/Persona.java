@@ -12,14 +12,18 @@ import java.util.Date;
  * @author Tobias
  */
 public class Persona {
-
+    
+    public static final String DELIM = "\t";
+    
     private long dni;
 
     private String nombre;
 
     private String apellido;
 
-    private MiCalendario fechaNacimiento;
+    protected MiCalendario fechaNacimiento;
+	
+	private char sexo;
 
     public Persona() {
 
@@ -29,18 +33,20 @@ public class Persona {
         setDni(dni);
     }
 
-    public Persona(long dni, String nombre, String apellido, MiCalendario fechaNacimiento) throws PersonaException {
-        setDni(dni);
-        setNombre(nombre);
-        setApellido(apellido);
-        setFechaNac(fechaNacimiento);
-    }
-
     public Persona(long dni, String nombre, String apellido) throws PersonaException {
         setDni(dni);
         setNombre(nombre);
         setApellido(apellido);
     }
+	
+    public Persona(long dni, String nombre, String apellido, MiCalendario fechaNacimiento, char sexo) throws PersonaException {
+        setDni(dni);
+        setNombre(nombre);
+        setApellido(apellido);
+        setFechaNacimiento(fechaNacimiento);
+		setSexo(sexo);	
+    }
+
 
     public long getDni() {
         return dni;
@@ -75,12 +81,36 @@ public class Persona {
         setApellido(apellido);
     }
 
-    public MiCalendario getFechaNac() {
+    public MiCalendario getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNac(MiCalendario fechaNacimiento) {
+    public void setFechaNacimiento(MiCalendario fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+    
+    public char getSexo() {
+        return sexo;
+    }
 
+    public void setSexo(char sexo) throws PersonaException {
+        sexo = Character.toUpperCase(sexo);
+        if (sexo!='F' && sexo!='M') {
+            throw new PersonaException("El sexo debe ser F o M (o f o m)"); 
+        }
+        this.sexo = sexo;        
+        
+    }
+
+    @Override
+    public String toString() {
+        String nombreStr = nombre.length()>20?nombre.substring(0, 20):nombre;
+        
+        return String.format("%8d", dni) + DELIM +
+                String.format("%20s", nombreStr) + DELIM +
+                String.format("%15s", apellido) + DELIM +
+                fechaNacimiento + DELIM +
+                sexo;
+    }
+    
 }
