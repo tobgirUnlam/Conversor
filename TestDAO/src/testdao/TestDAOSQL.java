@@ -23,7 +23,7 @@ import persona.PersonaException;
  *
  * @author Tobias
  */
-public class TestDAO {
+public class TestDAOSQL {
 
     /**
      * @param args the command line arguments
@@ -53,14 +53,14 @@ public class TestDAO {
             }
             
         } catch (DAOException | PersonaException | MiCalendarioException | DAOFactoryException ex) {
-            Logger.getLogger(TestDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
             if (dao!=null) {
                 try {
                     dao.close();
                 } catch (DAOException ex) {
-                    Logger.getLogger(TestDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TestDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
        

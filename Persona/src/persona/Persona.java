@@ -78,7 +78,7 @@ public class Persona {
         if (apellido == null || apellido.trim().equals("")) {
             throw new PersonaException("Debe indicar el apellido de la persona");
         }
-        setApellido(apellido);
+        this.apellido = apellido;
     }
 
     public MiCalendario getFechaNacimiento() {

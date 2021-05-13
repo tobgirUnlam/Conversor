@@ -84,4 +84,13 @@ public class Alumno extends Persona {
     public void setIsActivo(boolean isActivo){
         activo = isActivo;
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + DELIM +
+                fechaIngreso + DELIM + 
+                String.format("%2d", cantidadMateriasAprobadas) + DELIM +
+                String.format("%5.2f", promedio) + DELIM +
+                (activo?'A':'B');
+    }
 }
