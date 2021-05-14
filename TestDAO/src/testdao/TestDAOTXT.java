@@ -36,7 +36,8 @@ public class TestDAOTXT {
             setUp();
             CrearAlumnoCorrectamente();
             CrearMismoAlumnoNuevamenteGeneraError();
-
+            ActualizarAlumnoCorrectamente();
+            EliminarAlumnoCorrectamente();
         } catch (DAOException | PersonaException | MiCalendarioException | DAOFactoryException ex) {
             Logger.getLogger(TestDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -48,7 +49,7 @@ public class TestDAOTXT {
         System.out.println(":: Ejecutando test: CrearAlumnoCorrectamente() ::");
         MiCalendario fechaNac = new MiCalendario(23, 8, 1992);
         MiCalendario fechaIng = new MiCalendario(1, 3, 1993);
-        Alumno alu = new Alumno(24004612, "nombre2", "apellido2", fechaNac, fechaIng, 55, 7.33, 'M', true);        
+        Alumno alu = new Alumno(24004612, "nombre2", "apellido2", fechaNac, fechaIng, 55, 7.33, 'M', true);
         dao.create(alu);
         Alumno aluRead = dao.read(alu.getDni());
         if (aluRead != null) {
@@ -64,12 +65,44 @@ public class TestDAOTXT {
             MiCalendario fechaNac = new MiCalendario(23, 8, 1992);
             MiCalendario fechaIng = new MiCalendario(1, 3, 1993);
             Alumno alu = new Alumno(24004612, "nombre2", "apellido2", fechaNac, fechaIng, 55, 7.33, 'M', true);
-            
+
             dao.create(alu);
             System.out.println("TEST FAILED");
         } catch (DAOException ex) {
             System.out.println("TEST PASSED");
         } catch (Exception ex) {
+            System.out.println("TEST FAILED");
+        }
+    }
+
+    private static void ActualizarAlumnoCorrectamente() {
+        System.out.println(":: Ejecutando test: ActualizarAlumnoCorrectamente() ::");
+        try {
+            Alumno alumno = dao.read((long) 24004612);
+
+            alumno.setApellido("Rodriguez");
+
+            dao.update(alumno);
+
+            System.out.println("TEST PASSED");
+        } catch (DAOException | PersonaException e) {
+            System.out.println("TEST FAILED");
+        }
+    }
+
+    private static void EliminarAlumnoCorrectamente() {
+        System.out.println(":: Ejecutando test: EliminarAlumnoCorrectamente() ::");
+        try {
+            Alumno alumno = dao.read((long) 24004612);
+
+            dao.delete(alumno.getDni());
+
+            if (!dao.exists(alumno.getDni())) {
+                System.out.println("TEST PASSED");
+            } else {
+                System.out.println("TEST FAILED");
+            }
+        } catch (DAOException e) {
             System.out.println("TEST FAILED");
         }
     }

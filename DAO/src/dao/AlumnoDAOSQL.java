@@ -136,5 +136,10 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long>{
             throw new DAOException("Error al cerrar la BD ==> "+ex.getMessage());
         }
     }
+
+    @Override
+    public boolean exists(Long clave, Boolean activos) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

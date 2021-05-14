@@ -13,18 +13,24 @@ import java.util.List;
  * @param <T>
  * @param <K> Tipo de dato para la clave
  */
-public abstract class DAO<T,K> {
+public abstract class DAO<T, K> {
+
     // CRUD
     public abstract void create(T entidad) throws DAOException;
+
     public abstract T read(K clave) throws DAOException;
+
     public abstract void update(T entidad) throws DAOException;
-    public abstract void delete(K clave) throws DAOException;    
-    
+
+    public abstract void delete(K clave) throws DAOException;
+
     public abstract boolean exists(K clave) throws DAOException;
-    
+
+    public abstract boolean exists(K clave, Boolean activos) throws DAOException;
+
     public abstract List<T> findAll(Boolean activos) throws DAOException;
-    
+
     public abstract void close() throws DAOException;
-    
+
     // TODO close
 }
