@@ -35,9 +35,9 @@ public class TestDAOSQL {
             Map<String, String> config = new HashMap<>();
             config.put(DAOFactory.TIPO_DAO, "SQL");
             
-            config.put(DAOFactory.URL_DB, "jdbc:mysql://localhost:3306/efc");
-            config.put(DAOFactory.USUARIO_DB, "root");
-            config.put(DAOFactory.PASS_DB, "root");
+            config.put(DAOFactory.URL_DB, "jdbc:sqlserver://localhost:1433;databaseName=efc");
+            config.put(DAOFactory.USUARIO_DB, "sa");
+            config.put(DAOFactory.PASS_DB, "1234");
                     
             dao = DAOFactory.getIntance().createDAO(config);
 

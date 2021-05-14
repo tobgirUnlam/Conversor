@@ -39,7 +39,7 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long>{
                 "(DNI,\n" +
                 "NOMBRE,\n" +
                 "APELLIDO,\n" +
-                "FEC_NAC,\n" +
+                "FECHA_NACIMIENTO,\n" +
                 "SEXO,\n" +
                 "PROMEDIO)\n" +
                 "VALUES\n" +
@@ -73,7 +73,7 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long>{
             insertPS.setDate(index++, alumno.getFechaIngreso().toSQLDate());
             insertPS.setString(index++, String.valueOf(alumno.getSexo()));
             insertPS.setDouble(index++, alumno.getPromedio());
-            
+
             insertPS.execute();
             
         } catch (SQLException ex) {
