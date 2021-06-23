@@ -104,6 +104,7 @@ public class AlumnoDAOTXT extends DAO<Alumno, Long> {
     public void update(Alumno entidad) throws DAOException {
         try {
             //para poder actualizar el registro, debo obtener la posición inicial del puntero y sobreescribir.
+            //Modificar iterando linea por linea y si encontramos el DNI escribimos.
             long longitudActualDelRegistro = this.read(entidad.getDni()).toString().length() + System.lineSeparator().length(); //Se obtiene la longitud del puntero + el separador
             long posicionActualDelPuntero = raf.getFilePointer();
             raf.seek(posicionActualDelPuntero - longitudActualDelRegistro);
@@ -142,11 +143,10 @@ public class AlumnoDAOTXT extends DAO<Alumno, Long> {
     public boolean exists(Long dni, Boolean activos) throws DAOException {
         Alumno alumno = read(dni);
 
-        if (activos) {
+        if (activos)
             return alumno != null && alumno.isActivo();
-        } else {
-            return alumno != null;
-        }
+        return alumno != null;
+        
     }
 
     /**

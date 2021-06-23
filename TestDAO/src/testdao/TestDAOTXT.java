@@ -9,10 +9,10 @@ import dao.DAO;
 import dao.DAOException;
 import dao.DAOFactory;
 import dao.DAOFactoryException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,8 +36,10 @@ public class TestDAOTXT {
             setUp();
             CrearAlumnoCorrectamente();
             CrearMismoAlumnoNuevamenteGeneraError();
-            ActualizarAlumnoCorrectamente();
+            ActualizarAlumnoCorrectamente();            
+            CrearIntegrantesDelGrupooYObtenerTodo();
             EliminarAlumnoCorrectamente();
+            CrearIntegrantesDelGrupooYObtenerTodo();
         } catch (DAOException | PersonaException | MiCalendarioException | DAOFactoryException ex) {
             Logger.getLogger(TestDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -93,7 +95,7 @@ public class TestDAOTXT {
     private static void EliminarAlumnoCorrectamente() {
         System.out.println(":: Ejecutando test: EliminarAlumnoCorrectamente() ::");
         try {
-            Alumno alumno = dao.read((long) 24004612);
+            Alumno alumno = dao.read((long) 34230397);
 
             dao.delete(alumno.getDni());
 
@@ -104,6 +106,40 @@ public class TestDAOTXT {
             }
         } catch (DAOException e) {
             System.out.println("TEST FAILED");
+        }
+    }
+    
+    private static void CrearIntegrantesDelGrupooYObtenerTodo()throws DAOException, MiCalendarioException, PersonaException
+    {
+        System.out.println(":: Ejecutando test: CrearIntegrantesDelGrupooYObtenerTodo() ::");
+        MiCalendario fechaIng = new MiCalendario(15, 4, 2020);
+        
+        MiCalendario fechaNac1 = new MiCalendario(23, 8, 1992);
+        Alumno alu1 = new Alumno(34230397, "Tobias", "Girado", fechaNac1, fechaIng, 55, 7.33, 'M', true);
+        dao.create(alu1);
+        
+        MiCalendario fechaNac2 = new MiCalendario(5, 1, 1993);
+        Alumno alu2 = new Alumno(37141361, "Jonathan", "Hartmann", fechaNac2, fechaIng, 50, 7.66, 'M', true);
+        dao.create(alu2);
+        
+        MiCalendario fechaNac3 = new MiCalendario(24, 3, 1993);
+        Alumno alu3 = new Alumno(37250568, "Lautaro", "Pizzagalli", fechaNac3, fechaIng, 32, 4.25, 'M', true);
+        dao.create(alu3);
+        
+        MiCalendario fechaNac4 = new MiCalendario(20, 10, 1990);
+        Alumno alu4 = new Alumno(29365310, "Alejandro", "Rey", fechaNac4, fechaIng, 32, 4.25, 'M', true);
+        dao.create(alu4);
+        
+        MiCalendario fechaNac5 = new MiCalendario(1, 2, 1975);
+        Alumno alu5 = new Alumno(17566436, "Pablo", "Segobia", fechaNac5, fechaIng, 32, 4.25, 'M', true);
+        dao.create(alu5);
+        
+        List<Alumno> lista = dao.findAll(true);
+        
+        if(lista != null)
+        {
+            for (Alumno alu: lista)
+                System.out.println(alu.toString());
         }
     }
 

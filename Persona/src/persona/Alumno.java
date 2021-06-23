@@ -59,19 +59,26 @@ public class Alumno extends Persona {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(MiCalendario fechaIngreso) {
+    public void setFechaIngreso(MiCalendario fechaIngreso) throws AlumnoException{
+        if (fechaNacimiento==null) {
+            throw new AlumnoException("Se debe setear la fecha de Nacimiento");
+        }
+        if (fechaIngreso.before(fechaNacimiento)) {
+            throw new AlumnoException("La fecha de Ingreso deber ser mayor a la fecha de Nacimineto");
+        }
         this.fechaIngreso = fechaIngreso;
     }
 
-    public int getCantidadMateriasAprobadas() {
+    public Integer getCantidadMateriasAprobadas() {
         return cantidadMateriasAprobadas;
     }
 
-    public void setCantidadMateriasAprobadas(int cantidadMateriasAprobadas) {
+    public void setCantidadMateriasAprobadas(Integer cantidadMateriasAprobadas) {
+        // TODO validar negativos (lanzar AlumnoException("..."))
         this.cantidadMateriasAprobadas = cantidadMateriasAprobadas;
     }
 
-    public double getPromedio() {
+    public Double getPromedio() {
         return promedio;
     }
 

@@ -17,12 +17,18 @@ public class DAOFactory {
     
     public static final String TIPO_DAO = "TIPO_DAO";
     public static final String TIPO_DAO_TXT = "TXT";
+    public static final String TIPO_DAO_SQL = "SQL";
     
     public static final String URL_DB = "URL_DB";
     public static final String USUARIO_DB = "USUARIO_DB";
     public static final String PASS_DB = "PASS_DB";
     
+    public static final String FILE_NAME = "FILE_NAME";
+    
     private static DAOFactory instance;
+    
+    private AlumnoDAOTXT daoTXT;
+    private AlumnoDAOSQL daoSQL;
     
     private DAOFactory() {
     }
@@ -39,14 +45,20 @@ public class DAOFactory {
             String tipoDAO = config.get(TIPO_DAO);
             switch (tipoDAO) {
                 case TIPO_DAO_TXT:
-                    String filename = config.get("FILE_NAME");
-                    return new AlumnoDAOTXT(filename);
+                    String filename = config.get(FILE_NAME);
+                    if (daoTXT==null){
+                        daoTXT = new AlumnoDAOTXT(filename);
+                    }
+                    return daoTXT;
                 case "SQL":
                     String url = config.get(URL_DB);
                     String usuario = config.get(USUARIO_DB);
                     String pass = config.get(PASS_DB);
                     
-                    return new AlumnoDAOSQL(url, usuario, pass);
+                    if (daoSQL==null){
+                        daoSQL = new AlumnoDAOSQL(url, usuario, pass);
+                    }
+                    return daoSQL;
                 default:
                     throw new DAOFactoryException("Tipo de DAO NO implementado");
             }
