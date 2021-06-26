@@ -18,7 +18,7 @@ public class AlumnoModel extends AbstractTableModel {
 
     List<Alumno> alumnos = new ArrayList<>();
     
-    private static final String[] ENCABEZADOS = {"DNI", "Nombre", "Fecha Nac."};
+    private static final String[] ENCABEZADOS = {"DNI", "Nombre", "Fecha Nac.","Activo"};
 
     public void setAlumnos(List<Alumno> alumnos) {
         this.alumnos = alumnos;
@@ -55,6 +55,8 @@ public class AlumnoModel extends AbstractTableModel {
                 return alu.getNombre();
             case 2: // FechaNac
                 return alu.getFechaNacimiento();
+            case 3: 
+                return alu.isActivo();
         }
         
         return null;

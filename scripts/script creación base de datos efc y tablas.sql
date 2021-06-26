@@ -23,12 +23,13 @@ CREATE TABLE  alumnos  (
    APELLIDO  nvarchar(20) NOT NULL,
    FECHA_NACIMIENTO  date NOT NULL DEFAULT '2000-01-01',
    FECHA_INGRESO  date NOT NULL DEFAULT '2000-01-01',
+   MATERIAS_APROBADAS INT NOT NULL DEFAULT 0,
    SEXO  char(1) NOT NULL,
    PROMEDIO  decimal(4,2) NOT NULL,
    ACTIVO bit NOT NULL,
   PRIMARY KEY ( DNI ),
   CONSTRAINT FK_SEXO FOREIGN KEY(SEXO) References SEXOS(ID)  
 )
---Verificación
+--Verificaciï¿½n
 select * from sexos
 select * from alumnos

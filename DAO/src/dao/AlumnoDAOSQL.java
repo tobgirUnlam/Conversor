@@ -45,11 +45,12 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
                 + "APELLIDO,\n"
                 + "FECHA_NACIMIENTO,\n"
                 + "FECHA_INGRESO,\n"
+                + "MATERIAS_APROBADAS,\n"                
                 + "SEXO,\n"
                 + "PROMEDIO,\n"
                 + "ACTIVO)\n"
                 + "VALUES\n"
-                + "(?,?,?,?,?,?,?,?);";
+                + "(?,?,?,?,?,?,?,?,?);";
 
         try {
             insertPS = conn.prepareStatement(insertSQL);
@@ -66,12 +67,13 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
             Logger.getLogger(AlumnoDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
             throw new DAOException("Error al crear sentencia para SELECT ==> " + ex.getMessage());
         }
-        //TODO: agregar materias aprobadas (idem al create)
+
         String updateSQL = "UPDATE alumnos\n"
                 + "SET NOMBRE = ? ,\n"
                 + "APELLIDO = ? ,\n"
                 + "FECHA_NACIMIENTO = ? ,\n"
                 + "FECHA_INGRESO = ? ,\n"
+                + "MATERIAS_APROBADAS = ? ,\n"
                 + "SEXO = ? ,\n"
                 + "PROMEDIO = ?\n"
                 + "WHERE DNI = ?";
@@ -94,7 +96,9 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
             throw new DAOException("Error al crear sentencia para DELETE logico ==> " + ex.getMessage());
         }
 
-        String findsAllSQL = "SELECT * FROM alumnos";
+        String findsAllSQL = "select * from Alumnos "
+                + "where 1 = 1 "
+                + "and ? is null or (? is not null and ACTIVO = ?)"; //PROBAR
 
         try {
             findsAllPS = conn.prepareStatement(findsAllSQL);
@@ -114,6 +118,7 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
             insertPS.setString(index++, alumno.getApellido());
             insertPS.setDate(index++, alumno.getFechaNacimiento().toSQLDate());
             insertPS.setDate(index++, alumno.getFechaIngreso().toSQLDate());
+            insertPS.setInt(index++, alumno.getCantidadMateriasAprobadas());
             insertPS.setString(index++, String.valueOf(alumno.getSexo()));
             insertPS.setDouble(index++, alumno.getPromedio());
             insertPS.setBoolean(index++, alumno.isActivo());
@@ -131,28 +136,41 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
         Alumno alumno = null;
         try {
             selectPS.setLong(1, dni);
-            ResultSet rs = selectPS.executeQuery();
-            //TODO Unificar con FindAll para no tener duplicidad de código
-            if (rs.next()) {
+            ResultSet rs = selectPS.executeQuery();            
+            List<Alumno> alumnos = obtenerAlumnos(rs);
+            alumno = alumnos.get(0);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("No se encontró un alumno para el dni" + dni + ".");
+        }
+        return alumno;
+    }
+
+    private List<Alumno> obtenerAlumnos(ResultSet rs) throws DAOException{
+        List<Alumno> alumnos = new ArrayList<>();
+        Alumno alumno;
+        try{
+            while (rs.next()) {
                 alumno = new Alumno();
-                alumno.setDni(dni);
+                alumno.setDni(rs.getLong("DNI"));
                 alumno.setNombre(rs.getString("NOMBRE"));
                 alumno.setApellido(rs.getString("APELLIDO"));
                 alumno.setFechaNacimiento(new MiCalendario(rs.getDate("FECHA_NACIMIENTO")));
                 alumno.setFechaIngreso(new MiCalendario(rs.getDate("FECHA_INGRESO")));                
+                alumno.setCantidadMateriasAprobadas(rs.getInt("MATERIAS_APROBADAS"));
                 alumno.setSexo(rs.getString("SEXO").charAt(0));
                 alumno.setPromedio(rs.getDouble("PROMEDIO"));
                 alumno.setIsActivo(rs.getBoolean("ACTIVO"));
+                alumnos.add(alumno);
             }
-
-        } catch (SQLException | PersonaException ex) {
+            return alumnos;
+                    } catch (SQLException | PersonaException ex) {
             Logger.getLogger(AlumnoDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("No se encontró un alumno para el dni" + dni + ".");
+            throw new DAOException("Error al leer los alumnos ==> " + ex.getMessage());
         }
-
-        return alumno;
     }
-
+    
     @Override
     public void update(Alumno alumno) throws DAOException {
         try {
@@ -161,6 +179,7 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
             updatePS.setString(index++, alumno.getApellido());
             updatePS.setDate(index++, alumno.getFechaNacimiento().toSQLDate());
             updatePS.setDate(index++, alumno.getFechaIngreso().toSQLDate());            
+            updatePS.setInt(index++, alumno.getCantidadMateriasAprobadas());
             updatePS.setString(index++, String.valueOf(alumno.getSexo()));
             updatePS.setDouble(index++, alumno.getPromedio());
             updatePS.setLong(index++, alumno.getDni());
@@ -209,28 +228,17 @@ public class AlumnoDAOSQL extends DAO<Alumno, Long> {
     @Override
     public List<Alumno> findAll(Boolean activos) throws DAOException {
         List<Alumno> alumnos = new ArrayList<>();
-
+            int index = 1;
+            Integer value = activos == null ? null : activos ? 1 : 0;
         try {
+            findsAllPS.setObject(index++,value); //Esto quedó así porque el where es condicional para filtrar sólo activos y necesito 2 parámeteros...
+            findsAllPS.setObject(index++,value); //Esto quedó así porque el where es condicional para filtrar sólo activos y necesito 2 parámeteros...
+            findsAllPS.setObject(index++,value); //Esto quedó así porque el where es condicional para filtrar sólo activos y necesito 2 parámeteros...}
+            
             ResultSet rs = findsAllPS.executeQuery();
 
-            while (rs.next()) {
-                Alumno alumno = new Alumno();
-                alumno.setDni(rs.getLong("DNI"));
-                alumno.setNombre(rs.getString("NOMBRE"));
-                alumno.setApellido(rs.getString("APELLIDO"));
-                alumno.setFechaNacimiento(new MiCalendario(rs.getDate("FECHA_NACIMIENTO")));
-                alumno.setFechaIngreso(new MiCalendario(rs.getDate("FECHA_INGRESO")));                
-                alumno.setSexo(rs.getString("SEXO").charAt(0));
-                alumno.setPromedio(rs.getDouble("PROMEDIO"));
-                alumno.setIsActivo(rs.getBoolean("ACTIVO"));
-
-                //TODO: Filtrado en la query SQL directamente
-                if (!activos || (activos && alumno.isActivo())) {
-                    alumnos.add(alumno);
-                }
-
-            }
-        } catch (SQLException | PersonaException ex) {
+            alumnos = obtenerAlumnos(rs);
+        } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(AlumnoDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
             throw new DAOException("Error al leer los alumnos ==> " + ex.getMessage());
         }

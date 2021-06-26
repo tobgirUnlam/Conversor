@@ -38,6 +38,8 @@ public class TestDAOSQL {
             ActualizarAlumnoCorrectamente();
             EliminarAlumnoCorrectamente();
             CrearIntegrantesDelGrupooYObtenerTodo();
+            ObtenerTodosLosAlumnosConEliminados();
+            ObtenerTodosLosAlumnosEliminados();
 
         } catch (DAOException | PersonaException | MiCalendarioException | DAOFactoryException ex) {
             Logger.getLogger(TestDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +63,7 @@ public class TestDAOSQL {
             } else {
                 System.out.println("TEST FAILED");
             }
-        }catch(DAOException | MiCalendarioException | PersonaException ex){
+        } catch (DAOException | MiCalendarioException | PersonaException ex) {
             System.out.println("TEST FAILED");
         }
 
@@ -77,8 +79,7 @@ public class TestDAOSQL {
 
             dao.create(alu);
             System.out.println("TEST FAILED");
-        }
-        catch (DAOException ex) {
+        } catch (DAOException ex) {
             System.out.println("TEST PASSED");
         } catch (MiCalendarioException | PersonaException ex) {
             System.out.println("TEST FAILED");
@@ -147,6 +148,38 @@ public class TestDAOSQL {
             for (Alumno alu : lista) {
                 System.out.println(alu.toString());
             }
+        }
+    }
+
+    private static void ObtenerTodosLosAlumnosConEliminados() throws DAOException, MiCalendarioException, PersonaException {
+        System.out.println(":: Ejecutando test: ObtenerTodosLosAlumnosConEliminados() ::");
+        try {
+            List<Alumno> lista = dao.findAll(null);
+
+            if (lista != null) {
+                for (Alumno alu : lista) {
+                    System.out.println(alu.toString());
+                }
+                System.out.println("TEST PASSED");
+            }
+        } catch (Exception ex) {
+            System.out.println("TEST FAILED");
+        }
+    }
+
+    private static void ObtenerTodosLosAlumnosEliminados() throws DAOException, MiCalendarioException, PersonaException {
+        System.out.println(":: Ejecutando test: ObtenerTodosLosAlumnosEliminados() ::");
+        try {
+            List<Alumno> lista = dao.findAll(false);
+
+            if (lista != null) {
+                for (Alumno alu : lista) {
+                    System.out.println(alu.toString());
+                }
+                System.out.println("TEST PASSED");
+            }
+        } catch (Exception ex) {
+            System.out.println("TEST FAILED");
         }
     }
 
