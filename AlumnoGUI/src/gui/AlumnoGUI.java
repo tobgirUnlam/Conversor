@@ -9,6 +9,7 @@ import dao.DAO;
 import dao.DAOException;
 import dao.DAOFactory;
 import dao.DAOFactoryException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -364,6 +365,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 displayAlumnos();
             } catch (DAOFactoryException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jComboBoxDAOSelActionPerformed
