@@ -76,7 +76,6 @@ public class Alumno extends Persona {
     }
 
     public void setCantidadMateriasAprobadas(Integer cantidadMateriasAprobadas) throws AlumnoException {
-        // TODO validar negativos (lanzar AlumnoException("..."))
         if (cantidadMateriasAprobadas < 0) {
             throw new AlumnoException("La cantidad de manterias aprobadas no puede ser menor a 0");
         }

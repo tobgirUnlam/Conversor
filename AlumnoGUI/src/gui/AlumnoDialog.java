@@ -29,12 +29,16 @@ public class AlumnoDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        if (modo == Modo.Crear) {
-            setTitle("Crear alumno");
-        } else if (modo == Modo.Editar) {
-            setTitle("Editar alumno");
-        } else {
-            setTitle("Detalle alumno");
+        switch (modo) {
+            case Crear:
+                setTitle("Crear alumno");
+                break;
+            case Editar:
+                setTitle("Editar alumno");
+                break;
+            default:
+                setTitle("Detalle alumno");
+                break;
         }
         this.modo = modo;
     }
@@ -126,19 +130,8 @@ public class AlumnoDialog extends javax.swing.JDialog {
         jDateChooserFechaNac.setDateFormatString("dd/MM/yyyy");
 
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino", "No Binario" }));
-        jComboBoxSexo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxSexoActionPerformed(evt);
-            }
-        });
 
         jLabel8.setText("Apellido");
-
-        jTextFieldApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldApellidoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -203,12 +196,6 @@ public class AlumnoDialog extends javax.swing.JDialog {
         jLabel5.setText("Cantidad de materias aprobadas");
 
         jLabel6.setText("Promedio");
-
-        jTextFieldPromedio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPromedioActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -297,18 +284,6 @@ public class AlumnoDialog extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
-    private void jComboBoxSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSexoActionPerformed
-
-    }//GEN-LAST:event_jComboBoxSexoActionPerformed
-
-    private void jTextFieldApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldApellidoActionPerformed
-
-    private void jTextFieldPromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPromedioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPromedioActionPerformed
-
     private void dialog2Alu() throws PersonaException, MiCalendarioException {
         alumno = new Alumno();
         alumno.setDni(Long.valueOf(jTextFieldDNI.getText()));
@@ -355,29 +330,6 @@ public class AlumnoDialog extends javax.swing.JDialog {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlumnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlumnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlumnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlumnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

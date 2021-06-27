@@ -205,9 +205,6 @@
               </StringArray>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxSexoActionPerformed"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -218,9 +215,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldApellido">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldApellidoActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -306,9 +300,6 @@
         <Component class="javax.swing.JTextField" name="jTextFieldCantMaterias">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPromedio">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldPromedioActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

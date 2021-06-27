@@ -103,19 +103,16 @@ public class AlumnoDAOTXT extends DAO<Alumno, Long> {
     @Override
     public void update(Alumno entidad) throws DAOException {
         try {
-            //para poder actualizar el registro, debo obtener la posición inicial del puntero y sobreescribir.
-            //Modificar iterando linea por linea y si encontramos el DNI escribimos.
+
             long longitudActualDelRegistro = this.read(entidad.getDni()).toString().length() + System.lineSeparator().length(); //Se obtiene la longitud del puntero + el separador
             long posicionActualDelPuntero = raf.getFilePointer();
             raf.seek(posicionActualDelPuntero - longitudActualDelRegistro);
             raf.writeBytes(entidad.toString());
-        } catch (IOException e) {
-            //TODO: Log this
+
+        } catch (IOException ex) {
+            Logger.getLogger(AlumnoDAOTXT.class.getName()).log(Level.SEVERE, null, ex);
             throw new DAOException("Ocurrió un error al actualizar el alumno");
         }
-
-        // reaf.seek(puntero)
-        //actualizar todo el alumno
     }
 
     /**

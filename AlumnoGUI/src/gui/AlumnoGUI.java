@@ -39,7 +39,8 @@ public class AlumnoGUI extends javax.swing.JFrame {
             setLocationRelativeTo(null);
             this.setTitle("Sistema de gestión de alumnos");
             jButtonChooser.setVisible(true);
-
+            jCheckBoxDataSourceSelected.setVisible(false);
+            habilitarControles(false);
             aluModel = new AlumnoModel();
             jTableAlumnos.setModel(aluModel);
         } catch (Exception ex) {
@@ -66,6 +67,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jTextFieldFullPath = new javax.swing.JTextField();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBoxDataSourceSelected = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,6 +142,13 @@ public class AlumnoGUI extends javax.swing.JFrame {
             }
         });
 
+        jCheckBoxDataSourceSelected.setText("DataSourceSelected");
+        jCheckBoxDataSourceSelected.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBoxDataSourceSelectedStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,16 +165,21 @@ public class AlumnoGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jComboBoxDAOSel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldFullPath, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                        .addComponent(jTextFieldFullPath, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonChooser)))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonConsultar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(25, 25, 25))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonConsultar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBoxDataSourceSelected)))
+                .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +188,8 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonChooser)
                     .addComponent(jComboBoxDAOSel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldFullPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldFullPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBoxDataSourceSelected))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
@@ -192,6 +207,8 @@ public class AlumnoGUI extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
+
+        jCheckBoxDataSourceSelected.getAccessibleContext().setAccessibleName("jCheckBoxDataSourceSelected");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -219,7 +236,6 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 } catch (PersonaException ex) {
                     Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 aluModel.refrescarModelo();
             } else {
                 System.out.println("Se presionó <Cerrar> el diálogo!!!");
@@ -273,7 +289,6 @@ public class AlumnoGUI extends javax.swing.JFrame {
         if (opSel != jFileChooser.APPROVE_OPTION) {
             return;
         }
-
         jTextFieldFullPath.setText(jFileChooser.getSelectedFile().getAbsolutePath());
 
         Map<String, String> config = new HashMap<>();
@@ -281,16 +296,15 @@ public class AlumnoGUI extends javax.swing.JFrame {
         config.put(DAOFactory.FILE_NAME, jTextFieldFullPath.getText());
         try {
             dao = DAOFactory.getIntance().createDAO(config);
+            jCheckBoxDataSourceSelected.setSelected(true);
+            displayAlumnos();
         } catch (DAOFactoryException ex) {
             Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        displayAlumnos();
     }//GEN-LAST:event_jButtonChooserActionPerformed
 
     private void displayAlumnos() {
         try {
-
             Boolean activos = null;
             if (jCheckBox1.isSelected()) {
                 activos = true;
@@ -298,7 +312,6 @@ public class AlumnoGUI extends javax.swing.JFrame {
             if (jCheckBox2.isSelected()) {
                 activos = false;
             }
-
             alumnos = dao.findAll(activos);
             aluModel.setAlumnos(alumnos);
 
@@ -318,7 +331,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
         if (aluModi != null) {
             try {
-                
+
                 dao.create(aluModi);
             } catch (DAOException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -333,13 +346,9 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
     private void jComboBoxDAOSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDAOSelActionPerformed
         if ("TXT".equals((String) jComboBoxDAOSel.getSelectedItem())) {
-            // TODO mostrar fullpath + filechooser
-            // TODO ocultar textfield para conn BD
             jTextFieldFullPath.setVisible(true);
             jButtonChooser.setVisible(true);
-        } else { // SQL
-            // TODO mostrar textfield para conn BD
-            // TODO ocultar fullpath + filechooser
+        } else {
             jTextFieldFullPath.setVisible(false);
             jButtonChooser.setVisible(false);
 
@@ -356,11 +365,11 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
             try {
                 dao = DAOFactory.getIntance().createDAO(config);
+                jCheckBoxDataSourceSelected.setSelected(true);
+                displayAlumnos();
             } catch (DAOFactoryException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            displayAlumnos();
         }
     }//GEN-LAST:event_jComboBoxDAOSelActionPerformed
 
@@ -376,6 +385,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         int selectedAlumno = jTableAlumnos.getSelectedRow();
+
         if (selectedAlumno == -1) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("No ha seleccionado ningún alumno");
@@ -388,9 +398,8 @@ public class AlumnoGUI extends javax.swing.JFrame {
             System.out.println("Se abrió el diálogo!!!");
             alumnoDialog.setVisible(true);
             Alumno aluModi = alumnoDialog.getAlumno();
-
             if (aluModi != null) {
-                try {                    
+                try {
                     dao.update(aluModi);
                 } catch (DAOException ex) {
                     Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -398,39 +407,29 @@ public class AlumnoGUI extends javax.swing.JFrame {
                 aluModel.refrescarModelo();
                 displayAlumnos();
             } else {
-                System.out.println("Se presionó <Cerrar> el diálogo!!!");
+                System.out.println("Se presionó <Cerrar> en el diálogo");
             }
-            System.out.println("Se cerró el diálogo!!!");
+            System.out.println("Se cerró el diálogo");
         }
     }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jCheckBoxDataSourceSelectedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxDataSourceSelectedStateChanged
+        habilitarControles(jCheckBoxDataSourceSelected.isSelected());
+    }//GEN-LAST:event_jCheckBoxDataSourceSelectedStateChanged
+
+    private void habilitarControles(boolean activo) {
+        jButtonAgregar.setEnabled(activo);
+        jButtonModificar.setEnabled(activo);
+        jButtonConsultar.setEnabled(activo);
+        jButtonEliminar.setEnabled(activo);
+        jCheckBox1.setEnabled(activo);
+        jCheckBox2.setEnabled(activo);
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlumnoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlumnoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlumnoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlumnoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -447,6 +446,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBoxDataSourceSelected;
     private javax.swing.JComboBox<String> jComboBoxDAOSel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableAlumnos;

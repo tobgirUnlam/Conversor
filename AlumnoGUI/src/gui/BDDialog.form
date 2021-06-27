@@ -31,13 +31,13 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jTextFieldUser" pref="96" max="32767" attributes="0"/>
-                  <Component id="jPasswordField" max="32767" attributes="0"/>
+                  <Component id="jPasswordField" pref="142" max="32767" attributes="0"/>
+                  <Component id="jTextFieldUser" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace pref="131" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
           </Group>

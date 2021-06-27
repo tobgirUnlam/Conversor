@@ -1,0 +1,6 @@
+24004612	             nombre2	      Rodriguez	23/ 8/1992	M	 1/ 3/1993	55	 7.33	A
+34230397	              Tobias	         Girado	23/ 8/1992	M	15/ 4/2020	55	 7.33	B
+37141361	            Jonathan	       Hartmann	 5/ 1/1993	M	15/ 4/2020	50	 7.66	A
+37250568	             Lautaro	     Pizzagalli	24/ 3/1993	M	15/ 4/2020	32	 4.25	A
+29365310	           Alejandro	            Rey	20/10/1990	M	15/ 4/2020	32	 4.25	A
+17566436	               Pablo	        Segobia	 1/ 2/1975	M	15/ 4/2020	32	 4.25	A

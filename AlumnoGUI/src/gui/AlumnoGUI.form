@@ -36,19 +36,27 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jComboBoxDAOSel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextFieldFullPath" pref="396" max="32767" attributes="0"/>
+                      <Component id="jTextFieldFullPath" pref="339" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButtonChooser" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButtonConsultar" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButtonAgregar" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButtonModificar" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButtonEliminar" alignment="1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButtonConsultar" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jButtonAgregar" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jButtonModificar" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jButtonEliminar" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBoxDataSourceSelected" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,6 +68,7 @@
                   <Component id="jButtonChooser" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxDAOSel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldFullPath" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxDataSourceSelected" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -214,6 +223,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxDataSourceSelected">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DataSourceSelected"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="jCheckBoxDataSourceSelected"/>
+      </AccessibilityProperties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jCheckBoxDataSourceSelectedStateChanged"/>
       </Events>
     </Component>
   </SubComponents>

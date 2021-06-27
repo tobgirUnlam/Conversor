@@ -39,11 +39,10 @@ public class TestDAOTXT {
             ActualizarAlumnoCorrectamente();
             CrearIntegrantesDelGrupooYObtenerTodo();
             EliminarAlumnoCorrectamente();
-            CrearIntegrantesDelGrupooYObtenerTodo();
         } catch (DAOException | PersonaException | MiCalendarioException | DAOFactoryException ex) {
             Logger.getLogger(TestDAOSQL.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            tearDown();
+            //tearDown();
         }
     }
 
