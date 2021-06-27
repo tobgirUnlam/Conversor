@@ -97,8 +97,8 @@ public class Persona {
 
     public void setSexo(char sexo) throws PersonaException {
         sexo = Character.toUpperCase(sexo);
-        if (sexo != 'F' && sexo != 'M') {
-            throw new PersonaException("El sexo debe ser F o M (o f o m)");
+        if (sexo != 'F' && sexo != 'M' && sexo != 'N') {
+            throw new PersonaException("El sexo debe ser F, M, o N (o f,m,n)");
         }
         this.sexo = sexo;
 

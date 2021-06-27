@@ -7,20 +7,31 @@ package gui;
 
 /**
  *
- * @author gguzm
+ * @author Tobías
  */
 public class BDDto {
-    
+
+    private String connectionString;
+
     private String user;
-    
+
     private char[] password;
 
     public BDDto() {
     }
-    
-    public BDDto(String user, char[] password) {
+
+    public BDDto(String connectionString, String user, char[] password) {
+        this.connectionString = connectionString;
         this.user = user;
         this.password = password;
+    }
+
+    public String getConnectionString() {
+        return connectionString;
+    }
+
+    public void setConnectionString(String connectionString) {
+        this.connectionString = connectionString;
     }
 
     public String getUser() {
@@ -38,7 +49,5 @@ public class BDDto {
     public void setPassword(char[] password) {
         this.password = password;
     }
-    
-    
-    
+
 }

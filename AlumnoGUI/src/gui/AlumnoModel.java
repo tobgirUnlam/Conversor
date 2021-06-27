@@ -12,7 +12,7 @@ import persona.Alumno;
 
 /**
  *
- * @author gguzm
+ * @author Tobías
  */
 public class AlumnoModel extends AbstractTableModel {
 

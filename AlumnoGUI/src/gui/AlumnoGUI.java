@@ -38,12 +38,17 @@ public class AlumnoGUI extends javax.swing.JFrame {
             initComponents();
             setLocationRelativeTo(null);
             this.setTitle("Sistema de gestión de alumnos");
+
             jButtonChooser.setVisible(true);
             jCheckBoxDataSourceSelected.setVisible(false);
+
             habilitarControles(false);
+
             aluModel = new AlumnoModel();
             jTableAlumnos.setModel(aluModel);
+
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -224,22 +229,11 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
             AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, Modo.Detalle);
             alumnoDialog.alu2Dialog(alu);
-            System.out.println("Se abrió el diálogo!!!");
+            System.out.println("Se abrió el diálogo");
             alumnoDialog.setVisible(true);
-            Alumno aluModi = alumnoDialog.getAlumno();
 
-            if (aluModi != null) {
-                try {
-                    alu.setNombre(aluModi.getNombre());
-                    alu.setFechaNacimiento(aluModi.getFechaNacimiento());
+            System.out.println("Se presionó <Cerrar> el diálogo");
 
-                } catch (PersonaException ex) {
-                    Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                aluModel.refrescarModelo();
-            } else {
-                System.out.println("Se presionó <Cerrar> el diálogo!!!");
-            }
             System.out.println("Se cerró el diálogo!!!");
         }
 
@@ -248,10 +242,12 @@ public class AlumnoGUI extends javax.swing.JFrame {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         int selectedAlumno = jTableAlumnos.getSelectedRow();
         OpcionEliminar respuesta;
+
         if (selectedAlumno == -1) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("No ha seleccionado ningún alumno");
         } else {
+
             if (jComboBoxDAOSel.getSelectedItem().toString().equals("TXT")) {
                 JOptionPane.showConfirmDialog(this, "¿Está seguro que desea inhabilitar el alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 respuesta = OpcionEliminar.Inhabilitar;
@@ -325,13 +321,12 @@ public class AlumnoGUI extends javax.swing.JFrame {
         Alumno alu = new Alumno();
         AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, Modo.Crear);
         alumnoDialog.alu2Dialog(alu);
-        System.out.println("Se abrió el diálogo!!!");
+        System.out.println("Se abrió el diálogo");
         alumnoDialog.setVisible(true);
         Alumno aluModi = alumnoDialog.getAlumno();
 
         if (aluModi != null) {
             try {
-
                 dao.create(aluModi);
             } catch (DAOException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -359,7 +354,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
             Map<String, String> config = new HashMap<>();
             config.put(DAOFactory.TIPO_DAO, DAOFactory.TIPO_DAO_SQL);
-            config.put(DAOFactory.URL_DB, "jdbc:sqlserver://localhost:1433;databaseName=efc");
+            config.put(DAOFactory.URL_DB, bDDialog.getDto().getConnectionString());
             config.put(DAOFactory.USUARIO_DB, bDDialog.getDto().getUser());
             config.put(DAOFactory.PASS_DB, String.valueOf(bDDialog.getDto().getPassword()));
 
@@ -395,9 +390,10 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
             AlumnoDialog alumnoDialog = new AlumnoDialog(this, true, Modo.Editar);
             alumnoDialog.alu2Dialog(alu);
-            System.out.println("Se abrió el diálogo!!!");
+            System.out.println("Se abrió el diálogo");
             alumnoDialog.setVisible(true);
             Alumno aluModi = alumnoDialog.getAlumno();
+
             if (aluModi != null) {
                 try {
                     dao.update(aluModi);

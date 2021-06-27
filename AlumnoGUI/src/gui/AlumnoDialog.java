@@ -44,7 +44,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
     }
 
     public void alu2Dialog(Alumno alumno) {
-        jTextFieldDNI.setText(String.valueOf(alumno.getDni()));
+        jTextFieldDNI.setText(modo == modo.Crear ? "" : String.valueOf(alumno.getDni()));
         jTextFieldDNI.setEditable(modo == Modo.Crear);
         jTextFieldNombre.setText(alumno.getNombre());
         jTextFieldNombre.setEditable(modo != Modo.Detalle);
@@ -126,6 +126,8 @@ public class AlumnoDialog extends javax.swing.JDialog {
         jLabel3.setText("Fecha Nac.");
 
         jLabel7.setText("Sexo");
+
+        jTextFieldDNI.setToolTipText("");
 
         jDateChooserFechaNac.setDateFormatString("dd/MM/yyyy");
 
@@ -274,7 +276,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
         try {
             dialog2Alu();
             setVisible(false);
-        } catch (PersonaException | MiCalendarioException ex) {
+        } catch (PersonaException | MiCalendarioException | NumberFormatException ex) {
             Logger.getLogger(AlumnoDialog.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -284,7 +286,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
-    private void dialog2Alu() throws PersonaException, MiCalendarioException {
+    private void dialog2Alu() throws PersonaException, MiCalendarioException, NumberFormatException {
         alumno = new Alumno();
         alumno.setDni(Long.valueOf(jTextFieldDNI.getText()));
         alumno.setNombre(jTextFieldNombre.getText());
