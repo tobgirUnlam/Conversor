@@ -21,6 +21,8 @@ public class Alumno extends Persona {
 
     public Alumno() {
         super();
+        this.promedio = 0d;
+        this.cantidadMateriasAprobadas = 0;
     }
 
     public Alumno(MiCalendario fechaIngreso, Integer cantidadMateriasAprobadas, Double promedio) {
@@ -59,9 +61,9 @@ public class Alumno extends Persona {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(MiCalendario fechaIngreso) throws AlumnoException{
-        if (fechaNacimiento==null) {
-            throw new AlumnoException("Se debe setear la fecha de Nacimiento");
+    public void setFechaIngreso(MiCalendario fechaIngreso) throws AlumnoException {
+        if (fechaIngreso == null) {
+            throw new AlumnoException("Se debe setear la fecha de Igreso");
         }
         if (fechaIngreso.before(fechaNacimiento)) {
             throw new AlumnoException("La fecha de Ingreso deber ser mayor a la fecha de Nacimineto");
@@ -73,8 +75,11 @@ public class Alumno extends Persona {
         return cantidadMateriasAprobadas;
     }
 
-    public void setCantidadMateriasAprobadas(Integer cantidadMateriasAprobadas) {
+    public void setCantidadMateriasAprobadas(Integer cantidadMateriasAprobadas) throws AlumnoException {
         // TODO validar negativos (lanzar AlumnoException("..."))
+        if (cantidadMateriasAprobadas < 0) {
+            throw new AlumnoException("La cantidad de manterias aprobadas no puede ser menor a 0");
+        }
         this.cantidadMateriasAprobadas = cantidadMateriasAprobadas;
     }
 
@@ -82,22 +87,27 @@ public class Alumno extends Persona {
         return promedio;
     }
 
-    public void setPromedio(double promedio) {
+    public void setPromedio(double promedio) throws AlumnoException {
+        if (promedio < 0) {
+            throw new AlumnoException("El promedio no puede ser menor a 0");
+        }
         this.promedio = promedio;
     }
-    public boolean isActivo(){
+
+    public boolean isActivo() {
         return activo;
     }
-    public void setIsActivo(boolean isActivo){
+
+    public void setIsActivo(boolean isActivo) {
         activo = isActivo;
     }
-    
+
     @Override
     public String toString() {
-        return super.toString() + DELIM +
-                fechaIngreso + DELIM + 
-                String.format("%2d", cantidadMateriasAprobadas) + DELIM +
-                String.format("%5.2f", promedio) + DELIM +
-                (activo?'A':'B');
+        return super.toString() + DELIM
+                + fechaIngreso + DELIM
+                + String.format("%2d", cantidadMateriasAprobadas) + DELIM
+                + String.format("%5.2f", promedio) + DELIM
+                + (activo ? 'A' : 'B');
     }
 }

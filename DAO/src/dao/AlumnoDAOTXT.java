@@ -125,7 +125,7 @@ public class AlumnoDAOTXT extends DAO<Alumno, Long> {
      * @throws DAOException
      */
     @Override
-    public void delete(Long dni) throws DAOException {
+    public void delete(Long dni, Boolean logico) throws DAOException {
         Alumno alumno = read(dni);
         if (alumno == null) {
             throw new DAOException("El alumno a eliminar no existe");
@@ -143,10 +143,11 @@ public class AlumnoDAOTXT extends DAO<Alumno, Long> {
     public boolean exists(Long dni, Boolean activos) throws DAOException {
         Alumno alumno = read(dni);
 
-        if (activos)
+        if (activos) {
             return alumno != null && alumno.isActivo();
+        }
         return alumno != null;
-        
+
     }
 
     /**

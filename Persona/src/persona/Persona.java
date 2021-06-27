@@ -12,9 +12,9 @@ import java.util.Date;
  * @author Tobias
  */
 public class Persona {
-    
+
     public static final String DELIM = "\t";
-    
+
     private long dni;
 
     private String nombre;
@@ -22,8 +22,8 @@ public class Persona {
     private String apellido;
 
     protected MiCalendario fechaNacimiento;
-	
-	private char sexo;
+
+    private char sexo;
 
     public Persona() {
 
@@ -38,15 +38,14 @@ public class Persona {
         setNombre(nombre);
         setApellido(apellido);
     }
-	
+
     public Persona(long dni, String nombre, String apellido, MiCalendario fechaNacimiento, char sexo) throws PersonaException {
         setDni(dni);
         setNombre(nombre);
         setApellido(apellido);
         setFechaNacimiento(fechaNacimiento);
-		setSexo(sexo);	
+        setSexo(sexo);
     }
-
 
     public long getDni() {
         return dni;
@@ -85,32 +84,35 @@ public class Persona {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(MiCalendario fechaNacimiento) {
+    public void setFechaNacimiento(MiCalendario fechaNacimiento) throws PersonaException {
+        if (fechaNacimiento == null)
+            throw new PersonaException("Debe indicar la fecha de nacimiento");        
         this.fechaNacimiento = fechaNacimiento;
+
     }
-    
+
     public char getSexo() {
         return sexo;
     }
 
     public void setSexo(char sexo) throws PersonaException {
         sexo = Character.toUpperCase(sexo);
-        if (sexo!='F' && sexo!='M') {
-            throw new PersonaException("El sexo debe ser F o M (o f o m)"); 
+        if (sexo != 'F' && sexo != 'M') {
+            throw new PersonaException("El sexo debe ser F o M (o f o m)");
         }
-        this.sexo = sexo;        
-        
+        this.sexo = sexo;
+
     }
 
     @Override
     public String toString() {
-        String nombreStr = nombre.length()>20?nombre.substring(0, 20):nombre;
-        
-        return String.format("%8d", dni) + DELIM +
-                String.format("%20s", nombreStr) + DELIM +
-                String.format("%15s", apellido) + DELIM +
-                fechaNacimiento + DELIM +
-                sexo;
+        String nombreStr = nombre.length() > 20 ? nombre.substring(0, 20) : nombre;
+
+        return String.format("%8d", dni) + DELIM
+                + String.format("%20s", nombreStr) + DELIM
+                + String.format("%15s", apellido) + DELIM
+                + fechaNacimiento + DELIM
+                + sexo;
     }
-    
+
 }

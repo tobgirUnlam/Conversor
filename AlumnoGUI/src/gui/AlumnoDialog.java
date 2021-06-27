@@ -7,10 +7,10 @@ package gui;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.ComboBox;
 import javax.swing.JOptionPane;
 import persona.Alumno;
 import persona.MiCalendario;
+import persona.MiCalendarioException;
 import persona.PersonaException;
 
 /**
@@ -18,7 +18,7 @@ import persona.PersonaException;
  * @author gguzm
  */
 public class AlumnoDialog extends javax.swing.JDialog {
-
+    
     private Alumno alumno;
     private Modo modo;
 
@@ -32,25 +32,28 @@ public class AlumnoDialog extends javax.swing.JDialog {
         setTitle("TITULO");
         this.modo = modo;
     }
-
+    
     public void alu2Dialog(Alumno alumno) {
         jTextFieldDNI.setText(String.valueOf(alumno.getDni()));
         jTextFieldDNI.setEditable(modo == Modo.Crear);
         jTextFieldNombre.setText(alumno.getNombre());
         jTextFieldNombre.setEditable(modo != Modo.Detalle);
+        jTextFieldApellido.setText(alumno.getApellido());
+        jTextFieldApellido.setEditable(modo != Modo.Detalle);
         jComboBoxSexo.setSelectedIndex(obtenerIndiceParaCombo(alumno.getSexo()));
         jComboBoxSexo.setEditable(modo != Modo.Detalle);
         jDateChooserFechaNac.setCalendar(alumno.getFechaNacimiento());
-        jDateChooserFechaNac.setEnabled(modo != Modo.Detalle);
         jDateChooserFechaIngreso.setCalendar(alumno.getFechaIngreso());
+        jDateChooserFechaNac.setEnabled(modo != Modo.Detalle);
         jDateChooserFechaIngreso.setEnabled(modo != Modo.Detalle);
         jTextFieldCantMaterias.setText(String.valueOf(alumno.getCantidadMateriasAprobadas()));
-        jTextFieldCantMaterias.setEditable(false);
+        jTextFieldCantMaterias.setEditable(modo != Modo.Detalle);
         jTextFieldPromedio.setText(String.valueOf(alumno.getPromedio()));
-        jTextFieldPromedio.setEditable(false);        
+        jTextFieldPromedio.setEditable(modo != Modo.Detalle);
         jButtonGrabar.setVisible(modo != Modo.Detalle);
+        jButtonCerrar.setText(modo != Modo.Detalle ? "Cerrar" : "Aceptar");
     }
-
+    
     public Alumno getAlumno() {
         return this.alumno;
     }
@@ -78,6 +81,8 @@ public class AlumnoDialog extends javax.swing.JDialog {
         jTextFieldNombre = new javax.swing.JTextField();
         jDateChooserFechaNac = new com.toedter.calendar.JDateChooser();
         jComboBoxSexo = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldApellido = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jDateChooserFechaIngreso = new com.toedter.calendar.JDateChooser();
@@ -121,23 +126,41 @@ public class AlumnoDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setText("Apellido");
+
+        jTextFieldApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldApellidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jDateChooserFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                        .addComponent(jTextFieldDNI)
-                        .addComponent(jTextFieldNombre))
-                    .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel7))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                                .addComponent(jDateChooserFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldDNI)
+                            .addComponent(jTextFieldNombre)
+                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -150,6 +173,10 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -158,7 +185,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 49, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos académicos"));
@@ -171,9 +198,11 @@ public class AlumnoDialog extends javax.swing.JDialog {
 
         jLabel6.setText("Promedio");
 
-        jTextFieldCantMaterias.setText("jTextField1");
-
-        jTextFieldPromedio.setText("jTextField2");
+        jTextFieldPromedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPromedioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -183,16 +212,16 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                         .addComponent(jDateChooserFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCantMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldPromedio, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(jTextFieldCantMaterias))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -252,7 +281,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
         try {
             dialog2Alu();
             setVisible(false);
-        } catch (PersonaException ex) {
+        } catch (PersonaException | MiCalendarioException ex) {
             Logger.getLogger(AlumnoDialog.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -266,18 +295,35 @@ public class AlumnoDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jComboBoxSexoActionPerformed
 
-    private void dialog2Alu() throws PersonaException {
+    private void jTextFieldApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldApellidoActionPerformed
+
+    private void jTextFieldPromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPromedioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPromedioActionPerformed
+    
+    private void dialog2Alu() throws PersonaException, MiCalendarioException {
         alumno = new Alumno();
         alumno.setDni(Long.valueOf(jTextFieldDNI.getText()));
         alumno.setNombre(jTextFieldNombre.getText());
-        alumno.setFechaNacimiento(new MiCalendario(jDateChooserFechaNac.getCalendar()));
+        alumno.setApellido(jTextFieldApellido.getText());
+        if (jDateChooserFechaNac.getCalendar() == null) {
+            alumno.setFechaNacimiento(null);
+        } else {
+            alumno.setFechaNacimiento(new MiCalendario(jDateChooserFechaNac.getCalendar()));
+        }
         alumno.setSexo(obtenerSexoDeCombo());
-        alumno.setFechaIngreso(new MiCalendario(jDateChooserFechaIngreso.getCalendar()));
+        if (jDateChooserFechaIngreso.getCalendar() == null) {
+            alumno.setFechaIngreso(null);
+        } else {
+            alumno.setFechaIngreso(new MiCalendario(jDateChooserFechaIngreso.getCalendar()));
+        }
         alumno.setPromedio(Double.valueOf(jTextFieldPromedio.getText()));
         alumno.setCantidadMateriasAprobadas(Integer.valueOf(jTextFieldCantMaterias.getText()));
     }
-
-    private char obtenerSexoDeCombo() {        
+    
+    private char obtenerSexoDeCombo() {
         switch (jComboBoxSexo.getSelectedIndex()) {
             case 0:
                 return 'F';
@@ -287,17 +333,18 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 return 'N';
         }
     }
-
+    
     private int obtenerIndiceParaCombo(char sexo) {
-        switch(sexo){
+        switch (sexo) {
             case 'F':
                 return 0;
             case 'M':
                 return 1;
             default:
-               return 2;
+                return 2;
         }
-    }    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -356,8 +403,10 @@ public class AlumnoDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jTextFieldApellido;
     private javax.swing.JTextField jTextFieldCantMaterias;
     private javax.swing.JTextField jTextFieldDNI;
     private javax.swing.JTextField jTextFieldNombre;

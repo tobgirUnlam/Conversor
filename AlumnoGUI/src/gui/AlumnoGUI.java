@@ -10,8 +10,6 @@ import dao.DAOException;
 import dao.DAOFactory;
 import dao.DAOFactoryException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import persona.Alumno;
-import persona.MiCalendario;
-import persona.MiCalendarioException;
 import persona.PersonaException;
 
 /**
@@ -235,14 +231,30 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         int selectedAlumno = jTableAlumnos.getSelectedRow();
+        OpcionEliminar respuesta;
         if (selectedAlumno == -1) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("No ha seleccionado ningún alumno");
         } else {
-            JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar el alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (jComboBoxDAOSel.getSelectedItem().toString().equals("TXT")) {
+                JOptionPane.showConfirmDialog(this, "¿Está seguro que desea inhabilitar el alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                respuesta = OpcionEliminar.Inhabilitar;
+            } else {
+                String[] options = {"Inhabilitar", "Eliminar (¡No se puede deshacer!)", "Cancelar"};
+                respuesta = OpcionEliminar.values()[JOptionPane.showOptionDialog(this, "¿Que desea hacer con el alumno?", "Confirmar", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0])];
+            }
             try {
                 Alumno alu = alumnos.get(selectedAlumno);
-                dao.delete(alu.getDni());
+                switch (respuesta) {
+                    case Inhabilitar:
+                        dao.delete(alu.getDni(), true);
+                        break;
+                    case Eliminar:
+                        dao.delete(alu.getDni(), false);
+                        break;
+                    case Cancelar:
+                        return;
+                }
                 alumnos.remove(selectedAlumno);
             } catch (DAOException ex) {
                 JOptionPane.showMessageDialog(this, "Ocurrió un error al eliminar el alumno", "Error", JOptionPane.ERROR_MESSAGE);
@@ -306,18 +318,13 @@ public class AlumnoGUI extends javax.swing.JFrame {
 
         if (aluModi != null) {
             try {
-                alu.setDni(aluModi.getDni());
-                alu.setNombre(aluModi.getNombre());
-                alu.setFechaNacimiento(aluModi.getFechaNacimiento());
-                alu.setSexo(aluModi.getSexo());
-                alu.setFechaIngreso(aluModi.getFechaIngreso());
-                alu.setCantidadMateriasAprobadas(0);
-                alu.setPromedio(0);
-                dao.create(alu);
-            } catch (DAOException | PersonaException ex) {
+                
+                dao.create(aluModi);
+            } catch (DAOException ex) {
                 Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
             aluModel.refrescarModelo();
+            displayAlumnos();
         } else {
             System.out.println("Se presionó <Cerrar> el diálogo!!!");
         }
@@ -383,18 +390,13 @@ public class AlumnoGUI extends javax.swing.JFrame {
             Alumno aluModi = alumnoDialog.getAlumno();
 
             if (aluModi != null) {
-                try {
-                    alu.setDni(aluModi.getDni());
-                    alu.setNombre(aluModi.getNombre());
-                    alu.setFechaNacimiento(aluModi.getFechaNacimiento());
-                    alu.setSexo(aluModi.getSexo());
-                    alu.setFechaIngreso(aluModi.getFechaIngreso());                   
-                    dao.update(alu);
-                } catch (DAOException | PersonaException ex) {
+                try {                    
+                    dao.update(aluModi);
+                } catch (DAOException ex) {
                     Logger.getLogger(AlumnoGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 aluModel.refrescarModelo();
+                displayAlumnos();
             } else {
                 System.out.println("Se presionó <Cerrar> el diálogo!!!");
             }

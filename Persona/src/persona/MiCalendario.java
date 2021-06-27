@@ -20,37 +20,44 @@ public class MiCalendario extends GregorianCalendar {
     }
 
     public MiCalendario(int dia, int mes, int anio) throws MiCalendarioException {
-        super(anio, mes-1, dia);
+        super(anio, mes - 1, dia);
         setLenient(false);
-        
+
         try {
             get(Calendar.YEAR);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new MiCalendarioException("Error en la fecha");
         }
-        
+
     }
 
-    public MiCalendario(Calendar cal) {
-        setTimeInMillis(cal.getTimeInMillis());
+    public MiCalendario(Calendar cal) throws MiCalendarioException {
+        try {
+            setTimeInMillis(cal.getTimeInMillis());
+        } catch (Exception ex) {
+            throw new MiCalendarioException("Error en la fecha");
+        }
     }
-    
-    public MiCalendario(Date date) {
-        setTimeInMillis(date.getTime());
+
+    public MiCalendario(Date date) throws MiCalendarioException {
+        try {
+            setTimeInMillis(date.getTime());
+        } catch (Exception ex) {
+            throw new MiCalendarioException("Error en la fecha");
+        }
     }
-    
-    public int getAnio(){
+
+    public int getAnio() {
 
         return get(Calendar.YEAR);
     }
-        
-    public int getMes(){
 
-        return get(MONTH)+1;
+    public int getMes() {
+
+        return get(MONTH) + 1;
     }
-    
-    public int getDia(){
+
+    public int getDia() {
 
         return get(DAY_OF_MONTH);
     }
@@ -64,5 +71,5 @@ public class MiCalendario extends GregorianCalendar {
 
         return new Date(this.getTimeInMillis());
     }
-    
+
 }

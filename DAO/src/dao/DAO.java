@@ -22,7 +22,7 @@ public abstract class DAO<T, K> {
 
     public abstract void update(T entidad) throws DAOException;
 
-    public abstract void delete(K clave) throws DAOException;
+    public abstract void delete(K clave,Boolean logico) throws DAOException;    
 
     public abstract boolean exists(K clave) throws DAOException;
 

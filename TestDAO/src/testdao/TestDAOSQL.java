@@ -106,7 +106,7 @@ public class TestDAOSQL {
         try {
             Alumno alumno = dao.read((long) 24004612);
 
-            dao.delete(alumno.getDni());
+            dao.delete(alumno.getDni(), true);
 
             if (!dao.exists(alumno.getDni())) {
                 System.out.println("TEST PASSED");
