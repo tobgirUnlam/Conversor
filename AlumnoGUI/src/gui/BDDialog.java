@@ -19,6 +19,7 @@ public class BDDialog extends javax.swing.JDialog {
     public BDDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setLocationRelativeTo(null);
+        setTitle("Conexión a base de datos");
         initComponents();
     }
 

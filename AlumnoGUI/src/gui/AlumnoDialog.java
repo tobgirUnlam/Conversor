@@ -18,7 +18,7 @@ import persona.PersonaException;
  * @author gguzm
  */
 public class AlumnoDialog extends javax.swing.JDialog {
-    
+
     private Alumno alumno;
     private Modo modo;
 
@@ -29,10 +29,16 @@ public class AlumnoDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("TITULO");
+        if (modo == Modo.Crear) {
+            setTitle("Crear alumno");
+        } else if (modo == Modo.Editar) {
+            setTitle("Editar alumno");
+        } else {
+            setTitle("Detalle alumno");
+        }
         this.modo = modo;
     }
-    
+
     public void alu2Dialog(Alumno alumno) {
         jTextFieldDNI.setText(String.valueOf(alumno.getDni()));
         jTextFieldDNI.setEditable(modo == Modo.Crear);
@@ -53,7 +59,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
         jButtonGrabar.setVisible(modo != Modo.Detalle);
         jButtonCerrar.setText(modo != Modo.Detalle ? "Cerrar" : "Aceptar");
     }
-    
+
     public Alumno getAlumno() {
         return this.alumno;
     }
@@ -302,7 +308,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
     private void jTextFieldPromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPromedioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPromedioActionPerformed
-    
+
     private void dialog2Alu() throws PersonaException, MiCalendarioException {
         alumno = new Alumno();
         alumno.setDni(Long.valueOf(jTextFieldDNI.getText()));
@@ -322,7 +328,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
         alumno.setPromedio(Double.valueOf(jTextFieldPromedio.getText()));
         alumno.setCantidadMateriasAprobadas(Integer.valueOf(jTextFieldCantMaterias.getText()));
     }
-    
+
     private char obtenerSexoDeCombo() {
         switch (jComboBoxSexo.getSelectedIndex()) {
             case 0:
@@ -333,7 +339,7 @@ public class AlumnoDialog extends javax.swing.JDialog {
                 return 'N';
         }
     }
-    
+
     private int obtenerIndiceParaCombo(char sexo) {
         switch (sexo) {
             case 'F':

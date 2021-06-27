@@ -37,7 +37,7 @@ public class AlumnoGUI extends javax.swing.JFrame {
         try {
             initComponents();
             setLocationRelativeTo(null);
-
+            this.setTitle("Sistema de gestión de alumnos");
             jButtonChooser.setVisible(true);
 
             aluModel = new AlumnoModel();
